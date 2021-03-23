@@ -1,5 +1,5 @@
 class PrototypesController < ApplicationController
-  before_action :set_prototype, expect: [:index, :new, :create]  #上から順番に読み込まれるので、before_actionの順番はprototypeの宣言を優先する。
+  before_action :set_prototype, except: [:index, :new, :create]  #上から順番に読み込まれるので、before_actionの順番はprototypeの宣言を優先する。
   before_action :authenticate_user!, only: [:new, :edit, :destroy]  #アクションを実行する前にログインしていなければログイン画面に遷移。
   before_action :move_to_index, only: [:edit, :update, :destroy]
 
@@ -37,11 +37,10 @@ class PrototypesController < ApplicationController
   end
 
   def destroy
-      if @prototype.destroy #保存じゃないから(prototype_params)はいらない
+    if @prototype.destroy #保存じゃないから(prototype_params)はいらない
       redirect_to root_path
-    else
-      render root_path
     end
+    
   end
   
   
